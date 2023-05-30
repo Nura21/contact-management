@@ -25,14 +25,15 @@ class AddressBook:
     def search_contact(name: str):
         cursor = Connect.db.cursor()
 
-        sql = "SELECT * FROM contacts WHERE name=%s"
-        cursor.execute(sql, [name, ])
+        sql = "SELECT phone_number FROM contacts WHERE name=%s"
+        cursor.execute(sql, [name])
         
         contacts = cursor.fetchall()
-        
-        print("Data berhasil didapatkan")
+
+        if len(contacts) == 0:
+            return print("Kontak tidak ditemukan")
         
         for data in contacts:
             print(data)
-                
-        Connect.db.cursor().close()
+        
+        return Connect.db.cursor().close()
